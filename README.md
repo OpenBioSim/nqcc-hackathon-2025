@@ -41,7 +41,7 @@ Below, you can see potential energy surface plots for various O₂ states, gener
 
 From these plots we have estimated the following vertical excitation energy between the ground state and the first singlet state. They are given in electron volts (eV) for consistency with the spectroscopy literature (1 Hartree = 27.2114 eV).
 
-## Table 1. Computed vertical excitation energies for the T0S1 transition (electron volts). 
+## Table 1. Vertical excitation energies for the T0->S1 transition. 
 
 | Method    | Excitation energy / eV |
 | -------- | ------- |
