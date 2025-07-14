@@ -11,7 +11,10 @@ The following has been tested on Linux/Ubunu 20.04.6 LTS
 mamba create -n hackathon python==3.12
 mamba activate hackhaton
 pip install custatevec_cu12 pennylane-lightning-gpu pennylane-catalyst jax==0.4.28 jaxlib==0.4.28 jax-cuda12-plugin==0.4.28 optax notebook matplotlib jax[cuda12_pip]==0.4.28 -f https://storage.googleapis.com/jax-releases/jax_cuda_releases.html
-pip install openfermionpyscf 
+pip install openfermionpyscf
+git clone https://github.com/OpenBioSim/nqcc-hackathon-2025
+cd nqcc-hackathon-2025/
+jupyter-notebook VQD-O2-hackathon.ipynb
 ```
 
 
