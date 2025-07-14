@@ -14,15 +14,18 @@ Quantum computers offer the potential to achieve highly accurate models of the e
 In this hackathon, you will take on the challenge of computing the energies of the ground state and low-lying excited states of molecular dioxygen (O₂) using quantum algorithms. O2 is the second most abundant molecule in Earth’s atmosphere. In its electronic ground state, O₂ exists as a triplet state, meaning two electrons are unpaired. Photon absorption in the UV–vis spectrum can excite O₂ into two distinct reactive singlet states. These singlet states are short-lived and highly reactive, playing crucial roles in atmospheric chemistry, healthcare technologies (e.g., photodynamic cancer therapies), and materials science (e.g., battery corrosion).
 
 ![Figure 1. MO diagrams for O2 in its ground state and first two-excited states -source Wikipedia-](images/figure1.png)
+**Figure 1.** MO diagrams for O2 in its ground state and first two-excited states -source Wikipedia-
 
 We can predict the optimal wavelength of a photon required to excite O₂ from its electronic ground state to an excited state by computing vertical excitation energies—the energy differences between the ground and excited states at the same nuclear geometry. These energies are obtained by solving the time-independent Schrödinger equation for each state at a fixed geometry. At room temperature, O₂ in its ground state predominantly occupies geometries near its equilibrium bond length. Therefore, calculating vertical excitation energies at this equilibrium geometry provides a good estimate of the energy gap between the ground and excited states.
 
 ![Figure 2. Schematic potential energy surfaces for three electronic states of O2, the ground state T0, the first excited state S1, the second excited state S2. -source Wikipedia-](images/figure2.png)
+**Figure 2.** Schematic potential energy surfaces for three electronic states of O2, the ground state T0, the first excited state S1, the second excited state S2. -source Wikipedia-
 
 We can gain deeper insights into the properties of O₂ by computing the energies of different electronic states as a function of bond length. As the O₂ bond is stretched, its electronic structure becomes increasingly multireference in character, and classical electronic structure methods like CCSD(T) begin to struggle with wavefunction convergence.
 Below, you can see potential energy surface plots for various O₂ states, generated using different classical computational chemistry methods. These calculations were performed using the ORCA 6 software package. The Hartree–Fock solutions are poor, exhibiting significant spin contamination as the geometry deviates from the equilibrium bond length. The CCSD(T) calculations were carried out until the SCF solver failed to converge. As the basis set becomes more complex (from STO-3G to def2-SVP to cc-pVTZ), the computed potential energy values decrease, in accordance with the variational principle. The raw data is available in the GitHub repository, should you wish to replot any of the results alongside those from the variational quantum algorithms (VQAs).
 
 ![Figure 3. Classical benchmarks for computing potential energy surfaces of O2 in its ground state T0 or first excited state S1. ](images/figure3.png)
+**Figure 3.** Classical benchmarks for computing potential energy surfaces of O2 in its ground state T0 or first excited state S1. 
 
 From these plots we have estimated the following vertical excitation energy between the ground state and the first singlet state. They are given in electron volts (eV) for consistency with the spectroscopy literature (1 Hartree = 27.2114 eV).
 
@@ -46,7 +49,7 @@ The provided PennyLane notebook implements Variational Quantum Eigensolver (VQE)
 
 Can you execute the provided notebook and obtain a similar vertical excitation energy mentioned below (ca. 1.467 ev)?  See also tutorial #1 for additional insights in VQE and VQD. 
 
-<font color='red'>Google cloud: Can you provide instructions/starting points to execute the provided Pennylane notebook on a Google colab.</font> 
+**Google cloud: Can you provide instructions/starting points to execute the provided Pennylane notebook on a Google colab.**
 
 ## Scientific Objectives
 
@@ -66,10 +69,12 @@ These objectives assess how well the quantum simulations reproduce experimental 
 These objectives can be pursued using algorithms that may offer limited accuracy. However, it is preferable to optimize and deploy algorithms that demonstrate competitive performance with classical quantum chemistry methods.
 
 •	T1) Can you modify the provided code to deploy variational quantum algorithms on Alice and Bob hardware? Can you optimize algorithmic choices to make the most of the hardware’s capabilities
-<font color='red'>Alice and Bob: please provide instructions or starting points.</font>
+
+**[Alice and Bob:] please provide instructions or starting points.**
 
 •	T2) Compare the results of the VQAs run via noiseless emulation to those obtained on actual hardware. Can you develop error mitigation strategies to reduce the impact of noise on computational accuracy?
-<font color='red'>Alice and Bob: could you suggest how to use noise models? Is tutorial #6 helpful for this?</font>
+
+**[Alice and Bob:] could you suggest how to use noise models? Is tutorial #6 helpful for this?**
 
 •	T3) Can you optimize the quantum circuits to minimize qubit usage and gate operations without significantly compromising accuracy?
 
