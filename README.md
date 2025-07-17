@@ -18,7 +18,7 @@ jupyter-notebook VQD-O2-hackathon.ipynb
 ```
 
 
-# Background
+# Scientific Background
 
 Quantum computers offer the potential to achieve highly accurate models of the electronic structure of molecules, addressing the challenges posed by the steep computational cost of post-Hartree–Fock wavefunction methods. However, in the current era of noisy intermediate-scale quantum (NISQ) hardware, it is essential to carefully optimize quantum circuits to minimize the number of gate operations, enabling reliable execution on existing devices.
 
@@ -53,6 +53,16 @@ From these plots we have estimated the following vertical excitation energy betw
 | CCSD(T)/cc-pVTZ | 1.360 |
 
 The provided PennyLane notebook implements Variational Quantum Eigensolver (VQE) and Variational Quantum Deflation (VQD) to optimize the energies of O₂ in its ground state and first excited state, using a small active space and a minimal basis set. With the default settings, it yields a vertical excitation energy of 1.467 eV, which is slightly less accurate than the results from CCSD(T) calculations.
+
+# Hardware Architecture
+
+For this hackathon, you will be using Alice & Bob hardware which is based of cat qubits, superconducting qubits that are naturally protected against one type of noise (bit-flip errors).
+
+You can get a broad overview of how cat qubits work in the third part of our [whitepaper](https://alice-bob.com/wp-content/uploads/2024/12/Think-Inside-The-Box-Alice-Bob-Whitepaper.pdf), and you can play with the interesting properties of these qubits in the following [tutorial](https://github.com/Alice-Bob-SW/felis/blob/main/samples/An%20introduction%20to%20cat%20qubits.ipynb) (note that going from physical qubits to logical qubits through error correction is outside the scope of this hackathon). For a deep dive, please refer to our [foundational paper](https://www.nature.com/articles/s41567-020-0824-x) (also available at https://arxiv.org/abs/1907.11729)
+
+In this hackathon, you will be running Alice & Bob emulators locally inside the notebooks. We provide a connector from Pennylane to Qiskit, so that you can stick to Pennylane circuit description and implementation in your work.
+
+
 
 # Hackathon challenge! Can you complete as many as possible of the below objectives?
 
