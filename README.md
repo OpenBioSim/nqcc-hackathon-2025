@@ -56,15 +56,26 @@ The provided PennyLane notebook implements Variational Quantum Eigensolver (VQE)
 
 # Hardware Architecture
 
-For this hackathon, you will be using Alice & Bob hardware which is based of cat qubits, superconducting qubits that are naturally protected against one type of noise (bit-flip errors).
+For this hackathon, you will be using Alice & Bob emulators. These emulators reproduce the behavior of quantum computers based on cat qubits, superconducting qubits that are naturally protected against one type of noise (bit-flip errors).
 
-You can get a broad overview of how cat qubits work in the third part of our [whitepaper](https://alice-bob.com/wp-content/uploads/2024/12/Think-Inside-The-Box-Alice-Bob-Whitepaper.pdf), and you can play with the interesting properties of these qubits in the following [tutorial](https://github.com/Alice-Bob-SW/felis/blob/main/samples/An%20introduction%20to%20cat%20qubits.ipynb) (note that going from physical qubits to logical qubits through error correction is outside the scope of this hackathon). For a deep dive, please refer to our [foundational paper](https://www.nature.com/articles/s41567-020-0824-x) (also available at https://arxiv.org/abs/1907.11729)
+## About cat qubits
 
-In this hackathon, you will be running Alice & Bob emulators locally inside the notebooks. We provide a connector from Pennylane to Qiskit, so that you can stick to Pennylane circuit description and implementation in your work.
+You can get a broad overview of how cat qubits work in the third part of our [whitepaper](https://alice-bob.com/wp-content/uploads/2024/12/Think-Inside-The-Box-Alice-Bob-Whitepaper.pdf), and you can play with the interesting properties of these qubits in the following [tutorial](https://github.com/Alice-Bob-SW/felis/blob/main/samples/An%20introduction%20to%20cat%20qubits.ipynb) (note that going from physical qubits to logical qubits by explicitly implementing quantum error correction is outside the scope of this hackathon).
+
+For a deeper dive, a selection of relevant scientific articles is available at https://felis.alice-bob.com/docs/reference/papers/.
+
+## About Alice & Bob emulators
+
+Alice & Bob's Felis library lets you use cat qubits emulator under the form of Qiskit backends reproducing the gate set and noise model of quantum computers based on cat qubits: https://github.com/Alice-Bob-SW/qiskit-alice-bob-provider.
+
+Two types of emulators are available: "physical" and "logical". As the "physical" emulators are focused on running error correction experiments and do not feature a universal gate set, make sure you use "logical" emulators, which behave as an error-corrected (but not error-free) quantum computer would. For more about the distinction, you may read https://felis.alice-bob.com/docs/backends/logical_physical/.
+
+"Logical" emulators have two important features that will require you to adapt your algorithms:
+- They feature a discrete gate set, meaning your circuits must first be transpiled to this gate set in order to run. To test this feature in isolation, you may use the `EMU:40Q:LOGICAL_NOISELESS` backend (https://felis.alice-bob.com/docs/backends/backends_list/logical_noiseless/), which does not have a noise model and should therefore return the same results as your favorite generic emulator.
+- They feature a noise model, meaning your results will feature errors. This model depends on several parameters: `distance`, `kappa_1`, `kappa_2` and `average_nb_photons`. You can read more about these parameters at https://felis.alice-bob.com/docs/backends/set_parameters/. Backends such as `EMU:15Q:LOGICAL_EARLY` (https://felis.alice-bob.com/docs/backends/backends_list/logical_early/) have preset values for these parameters, but you can override the preset values by specifying your desired value upon backend creation.
 
 
-
-# Hackathon challenge! Can you complete as many as possible of the below objectives?
+# Hackathon challenge! Can you complete as many as possible of the objectives below?
 
 
 ## Tutorial mode
@@ -77,28 +88,38 @@ Can you execute the provided notebook and obtain a similar vertical excitation e
 
 These objectives assess how well the quantum simulations reproduce experimental data—a key step in validating more complex future simulations of O₂.
 
-•	O1) Can you optimize the algorithm to compute a vertical excitation energy for the first excited state that agrees within 0.1–0.2 eV of the experimental value?
+•	S1) Can you optimize the algorithm to compute a vertical excitation energy for the first excited state that agrees within 0.1–0.2 eV of the experimental value?
 
-•	O2) Can you compute an accurate vertical excitation energy for the second excited state? Experimental data shows that the S₂ singlet lies 1.627 eV above the T₀ ground state.
+•	S2) Can you compute an accurate vertical excitation energy for the second excited state? Experimental data shows that the S₂ singlet lies 1.627 eV above the T₀ ground state.
 
-•	O3) Can you compute an accurate bond dissociation energy for O₂ in its T₀ ground state? This can be determined by measuring the difference in potential energy between O₂ at its equilibrium bond length and at a large separation of the two oxygen atoms, where no chemical bonding occurs.
+•	S3) Can you compute an accurate bond dissociation energy for O₂ in its T₀ ground state? This can be determined by measuring the difference in potential energy between O₂ at its equilibrium bond length and at a large separation of the two oxygen atoms, where no chemical bonding occurs.
 
-•	Bonus – O4) Can you compute potential energy scans for O₂ in the S₁ and S₂ states and recover the energy values of dissociated O₂ in its ground state? From this, you can also estimate adiabatic excitation energies and compare them to vertical excitation energies.
-
-
-## Technical Objectives
+•	Bonus – S4) Can you compute potential energy scans for O₂ in the S₁ and S₂ states and recover the energy values of dissociated O₂ in its ground state? From this, you can also estimate adiabatic excitation energies and compare them to vertical excitation energies.
 
 These objectives can be pursued using algorithms that may offer limited accuracy. However, it is preferable to optimize and deploy algorithms that demonstrate competitive performance with classical quantum chemistry methods.
 
-•	T1) Can you modify the provided code to deploy variational quantum algorithms on Alice and Bob hardware? Can you optimize algorithmic choices to make the most of the hardware’s capabilities
+## Technical Objectives
 
-**[Alice and Bob:] please provide instructions or starting points.**
+These objectives assess how well you can adapt your work to some of the constraints introduced by error-corrected quantum hardware. Read above for an introduction to Alice & Bob's hardware and emulators.
 
-•	T2) Compare the results of the VQAs run via noiseless emulation to those obtained on actual hardware. Can you develop error mitigation strategies to reduce the impact of noise on computational accuracy?
+•	T1) Can you modify the provided code to deploy variational quantum algorithms on Alice and Bob emulators? Can you optimize algorithmic choices to reduce the size of transpiled circuits and improve speed, without compromising accuracy?
 
-**[Alice and Bob:] could you suggest how to use noise models? Is tutorial #6 helpful for this?**
+Tips:
 
-•	T3) Can you optimize the quantum circuits to minimize qubit usage and gate operations without significantly compromising accuracy?
+- While the emulators are Qiskit backends, Pennylane has a Qiskit connector that you can use. See https://github.com/QuantumETS/pennylane-alice-bob for a sample implementation.
+- Transpiling will be an issue, as targeting the gate set of logical qubits requires knowing the exact value of the parametrized gates typically used in variational circuits. You may need to change your algorithm's behavior so it transpiles right before running the circuit. This will likely affect your algorithm's speed (both because transpilation needs to be done several times, and because circuits will be deeper).
+
+•	T2) Compare the results of the VQAs run via noiseless emulation to those obtained on noisy backends. Can you develop error mitigation strategies to reduce the impact of noise on computational accuracy?
+
+Tips:
+
+- To compare noisy against noiseless results, you may draw inspiration from the following notebook: https://github.com/Alice-Bob-SW/felis/blob/main/samples/2_algorithms/4%20-%20Benchmarking%20a%20logical%20cat%20qubit%20processor%20through%20the%20SWAP%20test.ipynb. It shows how to explore the parameter space of the noise model and plot the results to identify acceptable combinations. Note that real hardware will have a fixed $\kappa_1/kappa_2$ value, flexible `average_nb_photons` and might have some control over `distance`. It can be interesting to identify a $\kappa_1/kappa_2$ value giving mixed results and identify what distance and number of photons should be used, knowing that a larger distance means more qubits on the chip.
+
+•	T3) Can you use a method based on QPE, rather than VQE, to reproduce or even outperform some of the scientific objectives above?
+
+Tips:
+
+- If the resulting circuit is too large to be emulated, you may explore the Alice & Bob resource estimator at https://github.com/Alice-Bob-SW/qsharp-alice-bob-resource-estimator
 
 ## Hints / Suggestions
 
@@ -124,7 +145,6 @@ Larger active spaces that include more virtual orbitals are expected to yield mo
 3)	https://pennylane.ai/qml/demos/tutorial_how_to_build_compressed_double_factorized_hamiltonians
 4)	https://pennylane.ai/qml/demos/tutorial_qubit_tapering
 5)	https://pennylane.ai/qml/demos/tutorial_differentiable_HF
-6)	https://pennylane.ai/qml/demos/tutorial_how_to_use_noise_models
 
 # Relevant references
 
@@ -134,8 +154,3 @@ Folded Spectrum VQE: A Quantum Computing Method for the Calculation of Molecular
 
 
 Happy hacking !!
-
-
-
-
-
