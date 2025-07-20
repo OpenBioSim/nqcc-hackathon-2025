@@ -5,7 +5,7 @@ This repository contains a Pennylane script to compute the energies of the groun
 
 # Installation instructions
 
-The following has been tested on Linux/Ubunu 20.04.6 LTS
+We encourage you to run your code inside the Google Colab environment that will be provided for you. If you wanted to run the notebooks on your laptop, you can follow the instructions below, that have been tested on Linux/Ubunu 20.04.6 LTS.
 
 ```
 mamba create -n hackathon python==3.12
@@ -66,7 +66,7 @@ For a deeper dive, a selection of relevant scientific articles is available at h
 
 ## About Alice & Bob emulators
 
-Alice & Bob's Felis library lets you use cat qubits emulator under the form of Qiskit backends reproducing the gate set and noise model of quantum computers based on cat qubits: https://github.com/Alice-Bob-SW/qiskit-alice-bob-provider.
+Alice & Bob's Felis library lets you use cat qubits emulator under the form of Qiskit backends reproducing the gate set and noise model of quantum computers based on cat qubits: https://github.com/Alice-Bob-SW/qiskit-alice-bob-provider. Note that we provide a Pennylane connector so that you don't necessarily need to work with Qiskit.
 
 Two types of emulators are available: "physical" and "logical". As the "physical" emulators are focused on running error correction experiments and do not feature a universal gate set, make sure you use "logical" emulators, which behave as an error-corrected (but not error-free) quantum computer would. For more about the distinction, you may read https://felis.alice-bob.com/docs/backends/logical_physical/.
 
@@ -106,16 +106,16 @@ These objectives assess how well you can adapt your work to some of the constrai
 
 Tips:
 
-- While the emulators are Qiskit backends, Pennylane has a Qiskit connector that you can use. See https://github.com/QuantumETS/pennylane-alice-bob for a sample implementation.
+- While the emulators are Qiskit backends, Pennylane has a Qiskit connector that you can use. See https://github.com/amoutenet/pennylane-alice-bob for a sample implementation.
 - Transpiling will be an issue, as targeting the gate set of logical qubits requires knowing the exact value of the parametrized gates typically used in variational circuits. You may need to change your algorithm's behavior so it transpiles right before running the circuit. This will likely affect your algorithm's speed (both because transpilation needs to be done several times, and because circuits will be deeper).
 
 •	T2) Compare the results of the VQAs run via noiseless emulation to those obtained on noisy backends. Can you develop error mitigation strategies to reduce the impact of noise on computational accuracy?
 
 Tips:
 
-- To compare noisy against noiseless results, you may draw inspiration from the following notebook: https://github.com/Alice-Bob-SW/felis/blob/main/samples/2_algorithms/4%20-%20Benchmarking%20a%20logical%20cat%20qubit%20processor%20through%20the%20SWAP%20test.ipynb. It shows how to explore the parameter space of the noise model and plot the results to identify acceptable combinations. Note that real hardware will have a fixed $\kappa_1/kappa_2$ value, flexible `average_nb_photons` and might have some control over `distance`. It can be interesting to identify a $\kappa_1/kappa_2$ value giving mixed results and identify what distance and number of photons should be used, knowing that a larger distance means more qubits on the chip.
+- To compare noisy against noiseless results, you may draw inspiration from the following notebook: https://github.com/Alice-Bob-SW/felis/blob/main/samples/2_algorithms/4%20-%20Benchmarking%20a%20logical%20cat%20qubit%20processor%20through%20the%20SWAP%20test.ipynb. It shows how to explore the parameter space of the noise model and plot the results to identify acceptable combinations. Note that real hardware will have a fixed $\kappa_1/\kappa_2$ value, flexible `average_nb_photons` and might have some control over `distance`. It can be interesting to identify a $\kappa_1/\kappa_2$ value giving mixed results and identify what distance and number of photons should be used, knowing that a larger distance means more qubits on the chip.
 
-•	T3) Can you use a method based on QPE, rather than VQE, to reproduce or even outperform some of the scientific objectives above?
+•	Bonus – T3) From NISQ to FTQC: Variational algorithms were first developed to take advantage of NISQ machines. Based on your above experiments, can you understand why, and what kind of limitations they face? A typical fault-tolerant algorithm to determine eigenvalues is the Quantum Phase Estimation (QPE). Can you use such a method, rather than VQE, to reproduce or even outperform some of the scientific objectives above?
 
 Tips:
 
